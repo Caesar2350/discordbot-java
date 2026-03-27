@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: discord-bot
-    env: java
-    buildCommand: mvn clean package -q -DskipTests
-    startCommand: java -jar target/untitled-1.0-SNAPSHOT.jar
-    envVars:
-      - key: BOT_TOKEN
-        sync: false
