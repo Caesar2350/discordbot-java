@@ -17,7 +17,8 @@ public class App extends ListenerAdapter {
     public static void main(String[] args) throws Exception {
         new Thread(() -> {
             try {
-                HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+                int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8000"));
+HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 server.createContext("/", new HttpHandler() {
                     @Override
                     public void handle(HttpExchange exchange) throws IOException {
