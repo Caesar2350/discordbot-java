@@ -1,13 +1,12 @@
-# Build stage
-# Stage 1 - Build
-FROM maven:3.9.4-eclipse-temurin-17 AS builder
+# Build stage (keep same)
+FROM maven:3.9-eclipse-temurin-21 AS builder
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Stage 2 - Run
-FROM eclipse-temurin:17-jre
+# Run stage
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/target/discord-bot-1.0-SNAPSHOT.jar app.jar
-CMD ["java", "-jar", "app.jar"]
+COPY --from=builder /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
