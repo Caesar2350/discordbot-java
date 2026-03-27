@@ -1,10 +1,11 @@
 FROM maven:3.9-eclipse-temurin-21 AS builder
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
+# Force SHADER as FINAL JAR
+RUN mvn clean package -DskipTests && \
+    mv target/discord-bot-1.0-SNAPSHOT-shaded.jar target/app.jar
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-# Bulletproof: Copies FIRST .jar found (shaded or regular)
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=builder /app/target/app.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
