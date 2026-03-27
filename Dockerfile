@@ -5,6 +5,7 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-# Copies FIRST JAR found (works ALWAYS)
-COPY --from=builder /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Copy ANY JAR that exists (shaded OR regular)
+COPY --from=builder /app/target/ app/
+WORKDIR /app/target
+ENTRYPOINT ["java", "-cp", "*:", "org.example.App"]
