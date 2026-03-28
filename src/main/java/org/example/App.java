@@ -39,6 +39,7 @@ HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         }).start();
 
         String token = System.getenv("BOT_TOKEN");
+        System.out.println("TOKEN = " + token);
         if (token == null || token.isBlank()) {
             System.out.println("❌ BOT_TOKEN missing!");
             return;
