@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class GeminiService {
 
-    private static final String API_KEY = "AIzaSyBhuvL18rPxpqFRFGeEjrIzz2GepLXJhcM";
+    private static final String API_KEY = System.getenv("AIzaSyBhuvL18rPxpqFRFGeEjrIzz2GepLXJhcM");
 
     public static String getResponse(String prompt) {
         try {
