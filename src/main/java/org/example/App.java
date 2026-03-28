@@ -31,7 +31,7 @@ HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 });
                 server.setExecutor(Executors.newSingleThreadExecutor());
                 server.start();
-                System.out.println("✅ Keep-Alive server started on port 8000");
+                int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8000"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
