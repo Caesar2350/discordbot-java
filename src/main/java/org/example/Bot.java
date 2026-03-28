@@ -1,9 +1,9 @@
 package org.example;
 
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import org.example.events.MessageListener;
+
+import java.util.EnumSet;
 
 public class Bot {
 
@@ -12,22 +12,23 @@ public class Bot {
             String token = System.getenv("BOT_TOKEN");
 
             if (token == null || token.isBlank()) {
-                System.out.println("❌ BOT_TOKEN is missing!");
+                System.out.println("❌ BOT_TOKEN missing!");
                 return;
             }
 
-            JDA jda = JDABuilder.createDefault(token)
-                    .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES)
-                    .addEventListeners(new MessageListener())
+            JDABuilder.createDefault(
+                            token,
+                            EnumSet.of(
+                                    GatewayIntent.GUILD_MESSAGES,
+                                    GatewayIntent.MESSAGE_CONTENT
+                            )
+                    )
+                    .addEventListeners(new BotListener()) // 👈 listener connected
                     .build();
 
-            jda.awaitReady();
-
-            System.out.println("✅ Bot is ONLINE!");
-            System.out.println("🤖 Logged in as: " + jda.getSelfUser().getAsTag());
+            System.out.println("✅ Bot is starting...");
 
         } catch (Exception e) {
-            System.out.println("❌ Error starting bot:");
             e.printStackTrace();
         }
     }
