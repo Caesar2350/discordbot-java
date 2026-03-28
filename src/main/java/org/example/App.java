@@ -18,6 +18,7 @@ public class App extends ListenerAdapter {
         new Thread(() -> {
             try {
                 int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8000"));
+                System.out.println("Server started on port " + port);
 HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 server.createContext("/", new HttpHandler() {
                     @Override
@@ -31,7 +32,7 @@ HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 });
                 server.setExecutor(Executors.newSingleThreadExecutor());
                 server.start();
-                int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8000"));
+                System.out.println("Server started on port " + port);
             } catch (Exception e) {
                 e.printStackTrace();
             }
