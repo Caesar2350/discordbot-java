@@ -1,35 +1,28 @@
 package org.example;
 
-import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.JDABuilder;
 
-import java.util.EnumSet;
+import org.example.commands.*;
+import org.example.events.MessageListener;
 
 public class Bot {
 
-    public void start() {
-        try {
-            String token = System.getenv("BOT_TOKEN");
+    public void start() throws Exception {
 
-            if (token == null || token.isBlank()) {
-                System.out.println("❌ BOT_TOKEN missing!");
-                return;
-            }
+        String token = System.getenv("BOT_TOKEN");
 
-            JDABuilder.createDefault(
-                            token,
-                            EnumSet.of(
-                                    GatewayIntent.GUILD_MESSAGES,
-                                    GatewayIntent.MESSAGE_CONTENT
-                            )
-                    )
-                    .addEventListeners(new BotListener()) // 👈 listener connected
-                    .build();
+        JDABuilder.createDefault(token,
+                        GatewayIntent.GUILD_MESSAGES,
+                        GatewayIntent.MESSAGE_CONTENT
+                )
+                .addEventListeners(new MessageListener())
+                .build();
 
-            System.out.println("✅ Bot is starting...");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // ✅ Register commands HERE
+        CommandRegistry.register(new PingCommand());
+        CommandRegistry.register(new HelpCommand());
+        CommandRegistry.register(new AskCommand());
+        CommandRegistry.register(new AICommand());
     }
 }

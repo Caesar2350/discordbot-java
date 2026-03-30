@@ -1,9 +1,6 @@
 package org.example.commands;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-
-import java.awt.*;
 
 public class HelpCommand implements Command {
 
@@ -15,16 +12,15 @@ public class HelpCommand implements Command {
     @Override
     public void execute(MessageReceivedEvent event, String[] args) {
 
-        EmbedBuilder embed = new EmbedBuilder();
+        String helpMessage = """
+        🤖 Nexus AI Commands:
 
-        embed.setTitle("🤖 Bot Commands");
-        embed.setColor(Color.CYAN);
+        !ping → Check bot
+        !help → Show commands
+        !ask  → Ask AI
+        !ai   → Switch AI (gemini/grok)
+        """;
 
-        embed.addField("!ping", "Check if bot is alive", false);
-        embed.addField("!help", "Show this help menu", false);
-
-        embed.setFooter("Made by you 🚀");
-
-        event.getChannel().sendMessageEmbeds(embed.build()).queue();
+        event.getChannel().sendMessage(helpMessage).queue();
     }
 }

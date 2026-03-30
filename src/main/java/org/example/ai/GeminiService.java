@@ -12,7 +12,7 @@ public class GeminiService {
 
     private static final String API_KEY = System.getenv("API_KEY");
 
-    public static String getResponse(String prompt) {
+    public String generateResponse(String prompt) {
         try {
             URL url = new URL(
                     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="
